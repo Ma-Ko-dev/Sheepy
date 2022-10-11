@@ -50,11 +50,13 @@ def btn_send() -> None:
 def btn_clear() -> None:
     global user_count
     user_count = ""
+    input_entry.config(text="0")
 
 
 def btn_pressed(num: str):
     global user_count
     user_count += num
+    input_entry.config(text=user_count)
 
 
 def check_position() -> bool:
@@ -110,17 +112,21 @@ canvas_animal.grid(row=0, column=0, columnspan=3)
 frame_numpad = Frame(root)
 frame_numpad.grid(row=1, column=1, pady=15)
 
+# count display
+input_entry = Label(master=frame_numpad, bg="white", fg="black", text="0", anchor="w")
+input_entry.grid(row=0, column=0, columnspan=3, sticky="wesn")
+
 # btn creation
 btn_text = 0
-for i in range(3):
+for i in range(1, 4):
     for j in range(3):
         btn_text += 1
         btn_list.append(GuiButton(master=frame_numpad, text=str(btn_text), row=i, column=j,
                                   action=lambda num=btn_text: btn_pressed(str(num))))
 
-button_zero = GuiButton(master=frame_numpad, text="0", row=3, column=1, action=lambda: btn_pressed(str(0)))
-button_clear = GuiButton(master=frame_numpad, text="Clear", row=3, column=0, action=btn_clear)
-button_send = GuiButton(master=frame_numpad, text="Send", row=3, column=2, action=btn_send)
+button_zero = GuiButton(master=frame_numpad, text="0", row=4, column=1, action=lambda: btn_pressed(str(0)))
+button_clear = GuiButton(master=frame_numpad, text="Clear", row=4, column=0, action=btn_clear)
+button_send = GuiButton(master=frame_numpad, text="Send", row=4, column=2, action=btn_send)
 btn_list.extend([button_zero, button_clear, button_send])
 
 root.mainloop()
