@@ -13,19 +13,37 @@ SHEEP_SFX = "sfx/sheep_noise.mp3"
 YAWN_SFX = ["sfx/yawn1.mp3", "sfx/yawn2.mp3", "sfx/yawn3.mp3"]
 
 timer = None
+btn_timer = None
 move_stop = False
 sheep_count = 1
 user_count = ""
+btn_list = []
+
+
+def btn_flash(flash):
+    global btn_timer
+    if flash:
+        for button in btn_list:
+            button.change_color("red")
+        btn_timer = root.after(250, lambda: btn_flash(False))
+    else:
+        for button in btn_list:
+            button.change_color(BLUE3)
+            root.after_cancel(btn_timer)
 
 
 def btn_send() -> None:
     global sheep_count
     global user_count
+    if user_count == "":
+        user_count = 0
     if int(user_count) == sheep_count:
         sheep_count += 1
         move_image()
     else:
+        # wrong input, user miscounted
         sheep_count = 1
+        btn_flash(True)
     btn_clear()
 
 
@@ -58,12 +76,9 @@ def check_position() -> bool:
 
 def play_sfx() -> None:
     chance = random.randint(1, 100)
-    print(chance)
     if chance <= 25:
-        print("Playing yawn")
         playsound(random.choice(YAWN_SFX), False)
     elif chance <= 50:
-        print("Playing sheep")
         playsound(SHEEP_SFX, False)
 
 
@@ -100,12 +115,12 @@ btn_text = 0
 for i in range(3):
     for j in range(3):
         btn_text += 1
-        new_button = GuiButton(master=frame_numpad, text=str(btn_text), row=i, column=j,
-                               action=lambda num=btn_text: btn_pressed(str(num)))
+        btn_list.append(GuiButton(master=frame_numpad, text=str(btn_text), row=i, column=j,
+                                  action=lambda num=btn_text: btn_pressed(str(num))))
 
 button_zero = GuiButton(master=frame_numpad, text="0", row=3, column=1, action=lambda: btn_pressed(str(0)))
 button_clear = GuiButton(master=frame_numpad, text="Clear", row=3, column=0, action=btn_clear)
 button_send = GuiButton(master=frame_numpad, text="Send", row=3, column=2, action=btn_send)
-
+btn_list.extend([button_zero, button_clear, button_send])
 
 root.mainloop()
