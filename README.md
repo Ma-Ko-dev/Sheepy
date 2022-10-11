@@ -5,4 +5,4 @@ So far the basic design is done. You can count, the sheep will move, you will he
 </br></br>
 Preview:
 <br>
-![Preview](sheepy-preview3.PNG)
+![Preview](sheepy-preview4.PNG)
