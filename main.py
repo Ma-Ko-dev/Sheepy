@@ -50,7 +50,7 @@ def btn_send() -> None:
 def btn_clear() -> None:
     global user_count
     user_count = ""
-    input_entry.config(text="0")
+    input_entry.config(text="")
 
 
 def btn_pressed(num: str):
@@ -113,7 +113,7 @@ frame_numpad = Frame(root)
 frame_numpad.grid(row=1, column=1, pady=15)
 
 # count display
-input_entry = Label(master=frame_numpad, bg="white", fg="black", text="0", anchor="w")
+input_entry = Label(master=frame_numpad, bg="white", fg="black", text="", anchor="w")
 input_entry.grid(row=0, column=0, columnspan=3, sticky="wesn")
 
 # btn creation
